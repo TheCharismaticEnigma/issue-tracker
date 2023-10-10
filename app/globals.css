@@ -8,6 +8,6 @@ body {
 
 @layer base {
   .navLink {
-    @apply hover:text-orange-500 transition-colors;
+    @apply hover:text-blue-400 transition-colors;
   }
 }
