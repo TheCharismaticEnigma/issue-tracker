@@ -26,7 +26,7 @@ const NavBar = () => {
       <ul className="flex space-x-6">
         {navLinks.map(({ label, href }) => (
           <li key={label}>
-            <Link href={href} className={`${linkColor(href)} navLink`}>
+            <Link href={href} className={`${linkColor(href)} navLink  `}>
               {label}
             </Link>
           </li>

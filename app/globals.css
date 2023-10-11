@@ -3,11 +3,11 @@
 @tailwind utilities;
 
 body {
-  @apply bg-black;
+  background-color: #111113;
 }
 
 @layer base {
   .navLink {
-    @apply hover:text-blue-400 transition-colors;
+    @apply transition-colors px-1.5 py-1 transition-all hover:bg-blue-300 rounded-lg hover:text-black;
   }
 }
