@@ -2,10 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  background-color: #111113;
-}
-
 @layer base {
   .navLink {
     @apply transition-colors px-1.5 py-1 transition-all hover:bg-blue-300 rounded-lg hover:text-black;
