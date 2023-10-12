@@ -1,16 +1,16 @@
 'use client';
 
-import { Button, Text, TextField, Box, Callout } from '@radix-ui/themes';
-import 'easymde/dist/easymde.min.css';
-import { Controller, useForm } from 'react-hook-form';
-import SimpleMDE from 'react-simplemde-editor';
-import { useRouter } from 'next/navigation';
-import axios from 'axios';
-import { useState } from 'react';
-import { zodResolver } from '@hookform/resolvers/zod';
-import createIssueSchema, { type IssueForm } from '@/schemas/createIssueSchema';
 import ErrorMessage from '@/components/ErrorMessage';
 import Spinner from '@/components/Spinner';
+import createIssueSchema, { type IssueForm } from '@/schemas/createIssueSchema';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Box, Button, Callout, TextField } from '@radix-ui/themes';
+import axios from 'axios';
+import 'easymde/dist/easymde.min.css';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
+import SimpleMDE from 'react-simplemde-editor';
 
 const NewIssuePage = () => {
   const {
@@ -27,6 +27,22 @@ const NewIssuePage = () => {
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const onSubmit = handleSubmit(async (data) => {
+    try {
+      setIsSubmitting(true);
+      await axios.post('/api/issues', {
+        title: data.title?.trimEnd().trimStart(),
+        description: data.description?.trimEnd().trimStart(),
+      });
+    } catch (error) {
+      setIsSubmitting(false);
+      setError('An Unexpected error occurred.');
+      throw error;
+    }
+    router.push('/issues');
+    reset();
+  });
+
   return (
     <Box className="max-w-xl ">
       {error && (
@@ -35,24 +51,7 @@ const NewIssuePage = () => {
         </Callout.Root>
       )}
 
-      <form
-        className="flex flex-col gap-3"
-        onSubmit={handleSubmit(async (data) => {
-          try {
-            setIsSubmitting(true);
-            await axios.post('/api/issues', {
-              title: data.title?.trimEnd().trimStart(),
-              description: data.description?.trimEnd().trimStart(),
-            });
-          } catch (error) {
-            setIsSubmitting(false);
-            setError('An Unexpected error occurred.');
-            throw error;
-          }
-          router.push('/issues');
-          reset();
-        })}
-      >
+      <form className="flex flex-col gap-3" onSubmit={onSubmit}>
         <TextField.Root>
           <TextField.Input
             placeholder="Issue Title"
