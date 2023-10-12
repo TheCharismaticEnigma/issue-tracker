@@ -10,6 +10,7 @@ import { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import createIssueSchema, { type IssueForm } from '@/schemas/createIssueSchema';
 import ErrorMessage from '@/components/ErrorMessage';
+import Spinner from '@/components/Spinner';
 
 const NewIssuePage = () => {
   const {
@@ -24,6 +25,7 @@ const NewIssuePage = () => {
 
   const router = useRouter();
   const [error, setError] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   return (
     <Box className="max-w-xl ">
@@ -37,11 +39,13 @@ const NewIssuePage = () => {
         className="flex flex-col gap-3"
         onSubmit={handleSubmit(async (data) => {
           try {
+            setIsSubmitting(true);
             await axios.post('/api/issues', {
               title: data.title?.trimEnd().trimStart(),
               description: data.description?.trimEnd().trimStart(),
             });
           } catch (error) {
+            setIsSubmitting(false);
             setError('An Unexpected error occurred.');
             throw error;
           }
@@ -69,7 +73,10 @@ const NewIssuePage = () => {
 
         <ErrorMessage>{errors.description?.message}</ErrorMessage>
 
-        <Button size={'3'}>Submit New Issue</Button>
+        <Button size={'3'} disabled={isSubmitting}>
+          Submit New Issue
+          {isSubmitting && <Spinner />}
+        </Button>
       </form>
     </Box>
   );
