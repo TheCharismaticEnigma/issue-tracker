@@ -9,6 +9,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import createIssueSchema, { type IssueForm } from '@/schemas/createIssueSchema';
+import ErrorMessage from '@/components/ErrorMessage';
 
 const NewIssuePage = () => {
   const {
@@ -56,11 +57,7 @@ const NewIssuePage = () => {
           />
         </TextField.Root>
 
-        {errors.title && (
-          <Text color="red" as="p">
-            {errors.title.message}
-          </Text>
-        )}
+        <ErrorMessage>{errors.title?.message}</ErrorMessage>
 
         <Controller
           control={control}
@@ -70,11 +67,7 @@ const NewIssuePage = () => {
           }}
         />
 
-        {errors.description && (
-          <Text color="red" as="p">
-            {errors.description.message}
-          </Text>
-        )}
+        <ErrorMessage>{errors.description?.message}</ErrorMessage>
 
         <Button size={'3'}>Submit New Issue</Button>
       </form>
