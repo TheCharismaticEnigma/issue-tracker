@@ -4,8 +4,8 @@ import { IssueStatus } from '@/entities';
 import Issue from '@/models/issueModel';
 import { Table } from '@radix-ui/themes';
 import IssueAction from './IssueAction';
-import Link from 'next/link';
 import { IssueSchema } from '@/entities';
+import Link from '@/components/Link';
 
 connectToDatabase();
 
