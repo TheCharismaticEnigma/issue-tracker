@@ -7,6 +7,31 @@ import { NextRequest, NextResponse } from 'next/server';
 
 connectToDatabase(); // Establish a connection with database.
 
+export async function GET() {
+  try {
+    const issues = await Issue.find();
+
+    if (issues)
+      return NextResponse.json(
+        {
+          message: 'Issues sent successfully.',
+          success: true,
+          issues,
+        },
+        { status: 200 }
+      );
+
+    return NextResponse.json({
+      issues: {},
+    });
+  } catch (error) {
+    return NextResponse.json(
+      { error: 'An unknown error occurred' },
+      { status: 500 }
+    );
+  }
+}
+
 export async function POST(request: NextRequest) {
   try {
     const requestBody = await request.json();

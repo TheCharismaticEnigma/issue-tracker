@@ -44,39 +44,36 @@ const NewIssuePage = () => {
   });
 
   return (
-    <Box className="max-w-xl ">
-      {error && (
-        <Callout.Root color="red">
-          <Callout.Text>{error}</Callout.Text>
-        </Callout.Root>
-      )}
-
-      <form className="flex flex-col gap-3" onSubmit={onSubmit}>
-        <TextField.Root>
-          <TextField.Input
-            placeholder="Issue Title"
-            size="3"
-            {...register('title')}
+    <Box className="w-full">
+      <Box className="max-w-2xl mx-auto">
+        {error && (
+          <Callout.Root color="red">
+            <Callout.Text>{error}</Callout.Text>
+          </Callout.Root>
+        )}
+        <form className="flex flex-col gap-3" onSubmit={onSubmit}>
+          <TextField.Root>
+            <TextField.Input
+              placeholder="Issue Title"
+              size="3"
+              {...register('title')}
+            />
+          </TextField.Root>
+          <ErrorMessage>{errors.title?.message}</ErrorMessage>
+          <Controller
+            control={control}
+            name={'description'}
+            render={({ field }) => {
+              return <SimpleMDE placeholder="Description" {...field} />;
+            }}
           />
-        </TextField.Root>
-
-        <ErrorMessage>{errors.title?.message}</ErrorMessage>
-
-        <Controller
-          control={control}
-          name={'description'}
-          render={({ field }) => {
-            return <SimpleMDE placeholder="Description" {...field} />;
-          }}
-        />
-
-        <ErrorMessage>{errors.description?.message}</ErrorMessage>
-
-        <Button size={'3'} disabled={isSubmitting}>
-          Submit New Issue
-          {isSubmitting && <Spinner />}
-        </Button>
-      </form>
+          <ErrorMessage>{errors.description?.message}</ErrorMessage>
+          <Button size={'3'} disabled={isSubmitting}>
+            Submit New Issue
+            {isSubmitting && <Spinner />}
+          </Button>
+        </form>
+      </Box>
     </Box>
   );
 };
