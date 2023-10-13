@@ -1,22 +1,9 @@
-import IssueStatusBadge from '@/components/IssueStatusBadge';
-import { connectToDatabase } from '@/dbConfig/dbConfig';
-import { IssueStatus } from '@/entities';
-import Issue from '@/models/issueModel';
-import { Button, Table, Badge } from '@radix-ui/themes';
-import Link from 'next/link';
+import { Table } from '@radix-ui/themes';
+import Skeleton from 'react-loading-skeleton';
 import IssueAction from './IssueAction';
 
-interface Issue {
-  title: string;
-  status: IssueStatus;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-connectToDatabase();
-
-const IssuesPage = async () => {
-  const issues: Issue[] = await Issue.find();
+const loading = () => {
+  const issues = [1, 2, 3, 4, 5, 6];
 
   return (
     <div className="shadow-sm shadow-violet-500 rounded-xl px-5 py-8 text-white flex flex-col gap-5 max-w-5xl mx-auto ">
@@ -25,26 +12,29 @@ const IssuesPage = async () => {
       <Table.Root size={'3'} variant="surface">
         <Table.Header>
           <Table.Row>
-            <Table.ColumnHeaderCell>TITLE</Table.ColumnHeaderCell>
-            <Table.ColumnHeaderCell className="hidden md:table-cell">
-              STATUS
+            <Table.ColumnHeaderCell>
+              <Skeleton />
             </Table.ColumnHeaderCell>
             <Table.ColumnHeaderCell className="hidden md:table-cell">
-              CREATION DATE
+              <Skeleton />
+            </Table.ColumnHeaderCell>
+            <Table.ColumnHeaderCell className="hidden md:table-cell">
+              <Skeleton />
             </Table.ColumnHeaderCell>
           </Table.Row>
         </Table.Header>
-
         <Table.Body>
-          {issues.map(({ status, title, createdAt }) => {
+          {issues.map((issue) => {
             return (
-              <Table.Row key={title}>
-                <Table.RowHeaderCell>{title}</Table.RowHeaderCell>
+              <Table.Row key={issue}>
+                <Table.RowHeaderCell>
+                  <Skeleton />
+                </Table.RowHeaderCell>
                 <Table.Cell className="hidden md:table-cell">
-                  <IssueStatusBadge status={status} />
+                  <Skeleton />
                 </Table.Cell>
                 <Table.Cell className="hidden md:table-cell">
-                  {createdAt.toDateString()}
+                  <Skeleton />
                 </Table.Cell>
               </Table.Row>
             );
@@ -55,4 +45,4 @@ const IssuesPage = async () => {
   );
 };
 
-export default IssuesPage;
+export default loading;
