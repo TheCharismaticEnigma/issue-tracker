@@ -2,21 +2,15 @@ import IssueStatusBadge from '@/components/IssueStatusBadge';
 import { connectToDatabase } from '@/dbConfig/dbConfig';
 import { IssueStatus } from '@/entities';
 import Issue from '@/models/issueModel';
-import { Button, Table, Badge } from '@radix-ui/themes';
-import Link from 'next/link';
+import { Table } from '@radix-ui/themes';
 import IssueAction from './IssueAction';
-
-interface Issue {
-  title: string;
-  status: IssueStatus;
-  createdAt: Date;
-  updatedAt: Date;
-}
+import Link from 'next/link';
+import { IssueSchema } from '@/entities';
 
 connectToDatabase();
 
 const IssuesPage = async () => {
-  const issues: Issue[] = await Issue.find();
+  const issues: IssueSchema[] = await Issue.find();
 
   return (
     <div className="shadow-sm shadow-violet-500 rounded-xl px-5 py-8 text-white flex flex-col gap-5 max-w-5xl mx-auto ">
@@ -36,10 +30,12 @@ const IssuesPage = async () => {
         </Table.Header>
 
         <Table.Body>
-          {issues.map(({ status, title, createdAt }) => {
+          {issues.map(({ status, title, createdAt, _id }) => {
             return (
               <Table.Row key={title}>
-                <Table.RowHeaderCell>{title}</Table.RowHeaderCell>
+                <Table.RowHeaderCell>
+                  <Link href={`/issues/${_id.toString()}`}>{title}</Link>
+                </Table.RowHeaderCell>
                 <Table.Cell className="hidden md:table-cell">
                   <IssueStatusBadge status={status} />
                 </Table.Cell>
