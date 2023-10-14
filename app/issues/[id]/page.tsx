@@ -1,12 +1,10 @@
-import { IssueStatusBadge } from '@/components';
 import { connectToDatabase } from '@/dbConfig/dbConfig';
 import { IssueSchema } from '@/entities';
 import Issue from '@/models/issueModel';
-import { Box, Card, Flex, Grid, Text, Button } from '@radix-ui/themes';
-import Link from 'next/link';
+import { Box, Grid } from '@radix-ui/themes';
 import { notFound } from 'next/navigation';
-import Markdown from 'react-markdown';
-import { Pencil2Icon } from '@radix-ui/react-icons';
+import EditIssueButton from './EditIssueButton';
+import IssueDetails from './IssueDetails';
 
 interface Props {
   params: {
@@ -30,27 +28,23 @@ const IssueDetailsPage = async ({ params: { id } }: Props) => {
       gap={'5'}
       className="shadow-sm shadow-violet-500 rounded-xl px-5 py-8 text-white flex flex-col gap-5 max-w-5xl mx-auto "
     >
-      <Flex className="flex-col mx-auto gap-5 w-full p-2  ">
-        <Text size={'7'}>{issue.title}</Text>
-
-        <Flex className="gap-5 items-center ">
-          <Text>{issue.createdAt.toDateString()}</Text>
-          <IssueStatusBadge status={issue.status} />
-        </Flex>
-
-        <Card className="w-fit">
-          <Markdown>{issue.description}</Markdown>
-        </Card>
-      </Flex>
+      <Box>
+        <IssueDetails issue={issue} />
+      </Box>
 
       <Box>
-        <Button>
-          <Pencil2Icon />
-          <Link href={`/issues/${id}/update`}>Edit Issue </Link>
-        </Button>
+        <EditIssueButton id={id} />
       </Box>
     </Grid>
   );
 };
 
 export default IssueDetailsPage;
+
+/* 
+ Single Responsibility Principle : 
+ All of the entities must have a single responsibility. 
+ Pages (page.tsx) must be confered upon a single responsibility. 
+ Other reponsibilities must be assigned to specific components, which 
+ must be co-located in the same folder as they aren't reusable. 
+*/
