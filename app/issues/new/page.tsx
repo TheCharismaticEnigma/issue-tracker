@@ -1,8 +1,7 @@
 'use client';
 
 import dynamic from 'next/dynamic';
-import ErrorMessage from '@/components/ErrorMessage';
-import Spinner from '@/components/Spinner';
+import { Spinner, ErrorMessage } from '@/components';
 import createIssueSchema, { type IssueForm } from '@/schemas/createIssueSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Box, Button, Callout, TextField } from '@radix-ui/themes';
@@ -11,6 +10,7 @@ import 'easymde/dist/easymde.min.css';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
+import SimpleMDE from 'react-simplemde-editor';
 
 const NewIssuePage = () => {
   const {
@@ -28,9 +28,9 @@ const NewIssuePage = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Import when needed and is client-side rendered
-  const SimpleMDE = dynamic(() => import('react-simplemde-editor'), {
-    ssr: false,
-  });
+  // const SimpleMDE = dynamic(() => import('react-simplemde-editor'), {
+  //   ssr: false,
+  // });
 
   const onSubmit = handleSubmit(async (data) => {
     try {

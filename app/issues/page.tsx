@@ -1,11 +1,10 @@
+import { Link } from '@/components';
 import IssueStatusBadge from '@/components/IssueStatusBadge';
 import { connectToDatabase } from '@/dbConfig/dbConfig';
-import { IssueStatus } from '@/entities';
+import { IssueSchema } from '@/entities';
 import Issue from '@/models/issueModel';
 import { Table } from '@radix-ui/themes';
 import IssueAction from './IssueAction';
-import { IssueSchema } from '@/entities';
-import Link from '@/components/Link';
 
 connectToDatabase();
 
