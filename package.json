@@ -12,6 +12,7 @@
     "@hookform/resolvers": "^3.3.2",
     "@radix-ui/themes": "^2.0.0",
     "axios": "^1.5.1",
+    "delay": "^6.0.0",
     "easymde": "^2.18.0",
     "mongoose": "^7.6.1",
     "next": "13.5.4",
