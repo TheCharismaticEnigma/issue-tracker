@@ -9,7 +9,7 @@ const loading = () => {
     <div className="shadow-sm shadow-violet-500 rounded-xl px-5 py-8 text-white flex flex-col gap-5 max-w-5xl mx-auto ">
       <IssueAction />
 
-      <Table.Root size={'3'} variant="surface">
+      <Table.Root className="mt-5" size={'3'} variant="surface">
         <Table.Header>
           <Table.Row>
             <Table.ColumnHeaderCell>

@@ -1,8 +1,8 @@
 import React from 'react';
 import IssueLoadingSkeleton from '../(components)/IssueLoadingSkeleton';
 
-const loading = () => {
+const IssueDetailLoadingPage = () => {
   return <IssueLoadingSkeleton />;
 };
 
-export default loading;
+export default IssueDetailLoadingPage;
