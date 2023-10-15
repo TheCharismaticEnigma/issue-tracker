@@ -16,6 +16,8 @@ interface Props {
   issue?: IssueSchema;
 }
 
+// Used for CREATING & UPDATING the issues.
+
 const IssueForm = ({ issue }: Props) => {
   const {
     register,
@@ -37,12 +39,15 @@ const IssueForm = ({ issue }: Props) => {
   // });
 
   const onSubmit = handleSubmit(async (data) => {
+    const formData = {
+      title: data.title?.trimEnd().trimStart(),
+      description: data.description?.trimEnd().trimStart(),
+    };
+
     try {
       setIsSubmitting(true);
-      await axios.post('/api/issues', {
-        title: data.title?.trimEnd().trimStart(),
-        description: data.description?.trimEnd().trimStart(),
-      });
+      if (issue) await axios.patch(`/api/issues/${issue._id}`, formData);
+      else await axios.post('/api/issues', formData);
     } catch (error) {
       setIsSubmitting(false);
       setError('An Unexpected error occurred.');
@@ -80,7 +85,7 @@ const IssueForm = ({ issue }: Props) => {
           />
           <ErrorMessage>{errors.description?.message}</ErrorMessage>
           <Button size={'3'} disabled={isSubmitting}>
-            Submit New Issue
+            {`${issue ? 'Update Issue' : 'Create New Issue'}`}
             {isSubmitting && <Spinner />}
           </Button>
         </form>
