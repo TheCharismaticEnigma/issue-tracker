@@ -50,4 +50,7 @@ const IssuesPage = async () => {
   );
 };
 
+export const dynamic = 'force-dynamic'; // This page will be dynamically rendered .
+// export const revalidate = 0 ; is the same.
+
 export default IssuesPage;

@@ -54,6 +54,7 @@ const IssueForm = ({ issue }: Props) => {
       throw error;
     }
     router.push('/issues');
+    router.refresh(); // force a content-refresh
     reset();
   });
 
