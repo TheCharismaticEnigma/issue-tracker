@@ -69,9 +69,9 @@ export async function DELETE(
   { params }: { params: { id: string } }
 ) {
   try {
-    const issue = await Issue.findOneAndDelete({ _id: params.id });
+    const issueExists = await Issue.findOne({ _id: params.id });
 
-    if (!issue)
+    if (!issueExists)
       return NextResponse.json(
         {
           error: 'No such issue found.',
@@ -79,11 +79,13 @@ export async function DELETE(
         { status: 400 }
       );
 
+    const deletedIssue = await Issue.findOneAndDelete({ _id: params.id });
+
     return NextResponse.json(
       {
         message: 'Issue Deleted Successfully',
         success: true,
-        issue,
+        deletedIssue,
       },
       { status: 200 }
     );
