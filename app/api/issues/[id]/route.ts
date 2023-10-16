@@ -63,3 +63,36 @@ export async function PATCH(
     );
   }
 }
+
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  try {
+    const issue = await Issue.findOneAndDelete({ _id: params.id });
+
+    if (!issue)
+      return NextResponse.json(
+        {
+          error: 'No such issue found.',
+        },
+        { status: 400 }
+      );
+
+    return NextResponse.json(
+      {
+        message: 'Issue Deleted Successfully',
+        success: true,
+        issue,
+      },
+      { status: 200 }
+    );
+  } catch (error) {
+    return NextResponse.json(
+      {
+        error: 'Something went wrong',
+      },
+      { status: 500 }
+    );
+  }
+}
