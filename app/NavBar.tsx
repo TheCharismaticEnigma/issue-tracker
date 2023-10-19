@@ -1,10 +1,20 @@
 'use client';
 
-import Link from 'next/link';
-import { AiFillBug } from 'react-icons/ai';
-import { usePathname } from 'next/navigation';
+import {
+  Avatar,
+  Box,
+  Button,
+  Container,
+  DropdownMenu,
+  DropdownMenuLabel,
+  Flex,
+  Text,
+} from '@radix-ui/themes';
+
 import { useSession } from 'next-auth/react';
-import { Box, Container, Flex } from '@radix-ui/themes';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { AiFillBug } from 'react-icons/ai';
 
 const NavBar = () => {
   const currentPath = usePathname();
@@ -43,9 +53,29 @@ const NavBar = () => {
           </Flex>
           <Box>
             {status === 'authenticated' && (
-              <Link href="/api/auth/signout" className="navLink">
-                Logout
-              </Link>
+              <DropdownMenu.Root>
+                <DropdownMenu.Trigger>
+                  <button>
+                    <Avatar
+                      src={session.user!.image!}
+                      size={'2'}
+                      radius="full"
+                      fallback={'?'}
+                      className="cursor-pointer"
+                      onClick={() => console.log('clicked')}
+                    />
+                  </button>
+                </DropdownMenu.Trigger>
+
+                <DropdownMenu.Content className="mt-0.5">
+                  <DropdownMenuLabel>
+                    <Text size={'3'}>Email - {session.user!.email!}</Text>
+                  </DropdownMenuLabel>
+                  <DropdownMenu.Item>
+                    <Link href="/api/auth/signout">Logout</Link>
+                  </DropdownMenu.Item>
+                </DropdownMenu.Content>
+              </DropdownMenu.Root>
             )}
             {status === 'unauthenticated' && (
               <Link href="/api/auth/signin" className="navLink">
