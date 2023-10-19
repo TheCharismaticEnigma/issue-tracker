@@ -3,9 +3,15 @@
 import Link from 'next/link';
 import { AiFillBug } from 'react-icons/ai';
 import { usePathname } from 'next/navigation';
+import { useSession } from 'next-auth/react';
+import { Box } from '@radix-ui/themes';
 
 const NavBar = () => {
   const currentPath = usePathname();
+  const { data: session, status } = useSession();
+
+  // With useSession() => get access to current session.
+  // provides access to status of authentication and data of the user.
 
   const linkColor = (href: string) => {
     // Looks up currentPath variable in the scope chain.
@@ -32,6 +38,20 @@ const NavBar = () => {
           </li>
         ))}
       </ul>
+
+      <Box>
+        {status === 'authenticated' && (
+          <Link href="/api/auth/signout" className="navLink">
+            Logout
+          </Link>
+        )}
+
+        {status === 'unauthenticated' && (
+          <Link href="/api/auth/signin" className="navLink">
+            Login
+          </Link>
+        )}
+      </Box>
     </nav>
   );
 };
