@@ -6,6 +6,8 @@ import { notFound } from 'next/navigation';
 import EditIssueButton from './EditIssueButton';
 import IssueDetails from './IssueDetails';
 import DeleteIssueButton from './DeleteIssueButton';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/app/auth/authOptions';
 
 interface Props {
   params: {
@@ -17,6 +19,7 @@ connectToDatabase();
 
 const IssueDetailsPage = async ({ params: { id } }: Props) => {
   const issue: IssueSchema | null = await Issue.findOne({ _id: id });
+  const session = await getServerSession(authOptions);
 
   if (!issue) notFound();
 
@@ -33,12 +36,16 @@ const IssueDetailsPage = async ({ params: { id } }: Props) => {
         <IssueDetails issue={issue} />
       </Box>
 
-      <Box className="lg:flex lg:place-items-center">
-        <Flex className="gap-3 flex-col mx-auto lg:w-4/5 ">
-          <EditIssueButton id={id} />
-          <DeleteIssueButton id={id} />
-        </Flex>
-      </Box>
+      {/* Display the issue modification box ONLY when LOGGED IN */}
+
+      {session && (
+        <Box className="lg:flex lg:place-items-center">
+          <Flex className="gap-3 flex-col mx-auto lg:w-4/5 ">
+            <EditIssueButton id={id} />
+            <DeleteIssueButton id={id} />
+          </Flex>
+        </Box>
+      )}
     </Grid>
   );
 };

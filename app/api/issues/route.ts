@@ -1,8 +1,10 @@
 // for data validation - Zod
 
+import { authOptions } from '@/app/auth/authOptions';
 import { connectToDatabase } from '@/dbConfig/dbConfig';
 import Issue from '@/models/issueModel';
 import createIssueSchema from '@/schemas/createIssueSchema';
+import { getServerSession } from 'next-auth';
 import { NextRequest, NextResponse } from 'next/server';
 
 connectToDatabase(); // Establish a connection with database.
@@ -33,6 +35,17 @@ export async function GET() {
 }
 
 export async function POST(request: NextRequest) {
+  const session = await getServerSession(authOptions);
+
+  // Status 401 - unauthorized request
+  if (!session)
+    return NextResponse.json(
+      {
+        error: 'User must be logged in.',
+      },
+      { status: 401 }
+    );
+
   try {
     const requestBody = await request.json();
     const validation = createIssueSchema.safeParse(requestBody);

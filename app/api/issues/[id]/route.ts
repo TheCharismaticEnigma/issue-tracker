@@ -1,9 +1,11 @@
 // Put - Replacing the entire object.
 // Patch - Changing one/more properties.
 
+import { authOptions } from '@/app/auth/authOptions';
 import { connectToDatabase } from '@/dbConfig/dbConfig';
 import Issue from '@/models/issueModel';
 import { default as issueSchema } from '@/schemas/createIssueSchema';
+import { getServerSession } from 'next-auth';
 import { NextRequest, NextResponse } from 'next/server';
 
 connectToDatabase();
@@ -13,6 +15,17 @@ export async function PATCH(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
+  const session = await getServerSession(authOptions);
+
+  // Status 401 - unauthorized request
+  if (!session)
+    return NextResponse.json(
+      {
+        error: 'User must be logged in.',
+      },
+      { status: 401 }
+    );
+
   try {
     const requestBody = await request.json();
 
@@ -68,6 +81,17 @@ export async function DELETE(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
+  const session = await getServerSession(authOptions);
+
+  // Status 401 - unauthorized request
+  if (!session)
+    return NextResponse.json(
+      {
+        error: 'User must be logged in.',
+      },
+      { status: 401 }
+    );
+
   try {
     const issueExists = await Issue.findOne({ _id: params.id });
 
