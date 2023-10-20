@@ -16,12 +16,50 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { AiFillBug } from 'react-icons/ai';
 
-const NavBar = () => {
-  const currentPath = usePathname();
+// CREATING SUB COMPONENTS TO PRESERVE THE LOGIC!
+// AuthStatus and NavLinks sub components.
+
+const AuthStatus = () => {
   const { data: session, status } = useSession();
 
-  // With useSession() => get access to current session.
-  // provides access to status of authentication and data of the user.
+  return (
+    <Box>
+      {status === 'authenticated' && (
+        <DropdownMenu.Root>
+          <DropdownMenu.Trigger>
+            <button>
+              <Avatar
+                src={session.user!.image!}
+                size={'2'}
+                radius="full"
+                fallback={session.user?.name?.[0].toUpperCase() || '?'}
+                className="cursor-pointer"
+                onClick={() => console.log('clicked')}
+              />
+            </button>
+          </DropdownMenu.Trigger>
+
+          <DropdownMenu.Content className="mt-0.5">
+            <DropdownMenuLabel>
+              <Text size={'3'}>Email - {session.user!.email!}</Text>
+            </DropdownMenuLabel>
+            <DropdownMenu.Item>
+              <Link href="/api/auth/signout">Logout</Link>
+            </DropdownMenu.Item>
+          </DropdownMenu.Content>
+        </DropdownMenu.Root>
+      )}
+      {status === 'unauthenticated' && (
+        <Link href="/api/auth/signin" className="navLink">
+          Login
+        </Link>
+      )}
+    </Box>
+  );
+};
+
+const NavLinks = () => {
+  const currentPath = usePathname();
 
   const linkColor = (href: string) => {
     // Looks up currentPath variable in the scope chain.
@@ -34,6 +72,23 @@ const NavBar = () => {
   ];
 
   return (
+    <ul className="flex space-x-6">
+      {navLinks.map(({ label, href }) => (
+        <li key={label}>
+          <Link href={href} className={`${linkColor(href)} navLink  `}>
+            {label}
+          </Link>
+        </li>
+      ))}
+    </ul>
+  );
+};
+
+const NavBar = () => {
+  // With useSession() => get access to current session.
+  // provides access to status of authentication and data of the user.
+
+  return (
     <nav className=" text-white border-b mb-5 py-3 px-5 ">
       <Container>
         <Flex justify={'between'}>
@@ -41,48 +96,11 @@ const NavBar = () => {
             <Link href="/">
               <AiFillBug />
             </Link>
-            <ul className="flex space-x-6">
-              {navLinks.map(({ label, href }) => (
-                <li key={label}>
-                  <Link href={href} className={`${linkColor(href)} navLink  `}>
-                    {label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </Flex>
-          <Box>
-            {status === 'authenticated' && (
-              <DropdownMenu.Root>
-                <DropdownMenu.Trigger>
-                  <button>
-                    <Avatar
-                      src={session.user!.image!}
-                      size={'2'}
-                      radius="full"
-                      fallback={'?'}
-                      className="cursor-pointer"
-                      onClick={() => console.log('clicked')}
-                    />
-                  </button>
-                </DropdownMenu.Trigger>
 
-                <DropdownMenu.Content className="mt-0.5">
-                  <DropdownMenuLabel>
-                    <Text size={'3'}>Email - {session.user!.email!}</Text>
-                  </DropdownMenuLabel>
-                  <DropdownMenu.Item>
-                    <Link href="/api/auth/signout">Logout</Link>
-                  </DropdownMenu.Item>
-                </DropdownMenu.Content>
-              </DropdownMenu.Root>
-            )}
-            {status === 'unauthenticated' && (
-              <Link href="/api/auth/signin" className="navLink">
-                Login
-              </Link>
-            )}
-          </Box>
+            <NavLinks />
+          </Flex>
+
+          <AuthStatus />
         </Flex>
       </Container>
     </nav>
