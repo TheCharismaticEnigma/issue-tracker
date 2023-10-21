@@ -122,3 +122,7 @@ export async function DELETE(
     );
   }
 }
+
+// API ENDPOINTS for backend logic.
+// comps => api end points with fetch/axios => data => rendering
+// route handler functions are cached w/o request parameter.
