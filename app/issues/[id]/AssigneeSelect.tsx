@@ -1,40 +1,12 @@
-/*  
-    REACT CONTEXT IS ONLY AVAILABLE IN QUERY CLIENT. 
-    Create the select dropdown component.
-    Create the API to retrieve the users from DB.
-    Supplant effect, state hooks with  React query to work w/ the 
-    backend and fetch from the api and if necessary, cache the result. 
-    (QueryClientProvider as context is ONLY for client components)
-
-    Select Component => API => React Query Custom Provider => useQuery() hook
-*/
-
 'use client';
 
-import { type User } from '@/schemas/userSchema';
-import { Select, Text } from '@radix-ui/themes';
-import axios from 'axios';
-import { useEffect, useState } from 'react';
-
-interface UsersAxiosResponse {
-  success: boolean;
-  users: User[];
-}
+import useFetchUsers from '@/hooks/useFetchUsers';
+import { Select } from '@radix-ui/themes';
 
 const AssigneeSelect = () => {
-  const [users, setUsers] = useState([] as User[]);
+  const { data: users, error } = useFetchUsers();
 
-  useEffect(() => {
-    const fetchUsers = async () => {
-      const {
-        data: { users },
-      } = await axios.get<UsersAxiosResponse>('/api/users'); // returns an object w/ data prop
-
-      setUsers(users);
-    };
-
-    fetchUsers();
-  }, []);
+  if (error) return null;
 
   return (
     <Select.Root>
@@ -44,7 +16,8 @@ const AssigneeSelect = () => {
           <Select.Label>ALL USERS</Select.Label>
           <Select.Separator />
 
-          {users.length > 0 &&
+          {users &&
+            users.length > 0 &&
             users.map((user, index) => {
               return (
                 <Select.Item value={user._id} key={user._id}>
