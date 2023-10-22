@@ -42,7 +42,7 @@ const IssueDetailsPage = async ({ params: { id } }: Props) => {
       {session && (
         <Box className="lg:flex lg:place-items-center">
           <Flex className="gap-3 flex-col mx-auto lg:w-4/5 ">
-            <AssigneeSelect id={id} />
+            <AssigneeSelect issue={issue} />
             <EditIssueButton id={id} />
             <DeleteIssueButton id={id} />
           </Flex>

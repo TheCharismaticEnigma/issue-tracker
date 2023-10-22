@@ -11,4 +11,5 @@ export interface IssueSchema {
   createdAt: Date;
   updatedAt: Date;
   description: string;
+  assignedToUserId?: string;
 }
