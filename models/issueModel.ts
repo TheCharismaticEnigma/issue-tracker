@@ -1,7 +1,10 @@
-import mongoose from 'mongoose';
+import mongoose, { Model, Schema } from 'mongoose';
+import User from './userModel';
 
 // _id is auto-generated in MongoDB.
 const issueSchema = new mongoose.Schema({
+  _id: Schema.Types.ObjectId,
+
   title: {
     type: String,
     required: true,
@@ -32,9 +35,14 @@ const issueSchema = new mongoose.Schema({
     type: Date,
     default: Date.now(),
   },
+
+  assignedToUserId: { type: Schema.Types.String },
 });
 
 // Creating a model from Schema.
 const Issue = mongoose.models.issues || mongoose.model('issues', issueSchema);
 
 export default Issue;
+
+// An issue can be assigned exclusively to a SINGLE USER.
+// Multiple issues can be assigned to a particular user.

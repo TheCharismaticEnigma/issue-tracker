@@ -4,13 +4,20 @@
 import { authOptions } from '@/app/auth/authOptions';
 import { connectToDatabase } from '@/dbConfig/dbConfig';
 import Issue from '@/models/issueModel';
-import { default as issueSchema } from '@/schemas/createIssueSchema';
+import User from '@/models/userModel';
+import {
+  PatchIssueInterface,
+  patchIssueSchema,
+} from '@/schemas/createIssueSchema';
+import { Model } from 'mongoose';
 import { getServerSession } from 'next-auth';
 import { NextRequest, NextResponse } from 'next/server';
 
 connectToDatabase();
 
-// Validate Request Body. check if id is valid. if it is, update.
+// For the first time, POST. Then Patch.
+// Thus will only be called upon the selection of the dropdown option
+
 export async function PATCH(
   request: NextRequest,
   { params }: { params: { id: string } }
@@ -27,10 +34,9 @@ export async function PATCH(
     );
 
   try {
-    const requestBody = await request.json();
-
-    // Validate the Request Body Data
-    const validation = issueSchema.safeParse(requestBody);
+    const requestBody: PatchIssueInterface = await request.json();
+    const validation = patchIssueSchema.safeParse(requestBody);
+    console.log(requestBody);
 
     if (!validation.success)
       return NextResponse.json(
@@ -40,14 +46,26 @@ export async function PATCH(
         { status: 400 }
       );
 
-    const { title, description } = requestBody;
+    const { title, description, assignedToUserId } = requestBody;
 
-    //   Update Issue if it exists.
+    if (assignedToUserId && assignedToUserId !== 'unassigned') {
+      const assignedUser = await User.findOne({
+        _id: assignedToUserId,
+      });
+
+      if (!assignedUser)
+        return NextResponse.json(
+          { error: 'Invalid User. Please assign to the existing user.' },
+          { status: 400 }
+        );
+    }
+
     const issue = await Issue.findOneAndUpdate(
       { _id: params.id },
       {
         title,
         description,
+        assignedToUserId,
       }
     );
 
@@ -58,6 +76,8 @@ export async function PATCH(
         },
         { status: 400 }
       );
+
+    // If user & userId on issue exists, remove it
 
     return NextResponse.json(
       {

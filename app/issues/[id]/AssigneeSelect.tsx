@@ -2,19 +2,26 @@
 
 import useFetchUsers from '@/hooks/useFetchUsers';
 import { Select } from '@radix-ui/themes';
+import axios from 'axios';
 
-const AssigneeSelect = () => {
+const AssigneeSelect = ({ id: issueId }: { id: string }) => {
   const { data: users, error } = useFetchUsers();
 
   if (error) return null;
 
+  const onSelect = async (userId: string) => {
+    await axios.patch(`/api/issues/${issueId}`, {
+      assignedToUserId: userId,
+    });
+  };
+
   return (
-    <Select.Root>
+    <Select.Root onValueChange={onSelect}>
       <Select.Trigger placeholder="Assigned User" />
       <Select.Content>
+        <Select.Separator />
         <Select.Group>
-          <Select.Label>ALL USERS</Select.Label>
-          <Select.Separator />
+          <Select.Item value={'unassigned'}>Unassign User</Select.Item>
 
           {users &&
             users.length > 0 &&
@@ -26,6 +33,7 @@ const AssigneeSelect = () => {
               );
             })}
         </Select.Group>
+        <Select.Separator />
       </Select.Content>
     </Select.Root>
   );
