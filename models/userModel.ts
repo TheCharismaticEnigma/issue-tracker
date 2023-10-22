@@ -2,8 +2,6 @@ import mongoose, { Model, Schema } from 'mongoose';
 import Issue from './issueModel';
 
 const UserSchema = new mongoose.Schema({
-  _id: Schema.Types.ObjectId,
-
   name: {
     type: String,
     required: [true, 'Please enter a username'],

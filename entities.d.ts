@@ -4,6 +4,11 @@
 export type IssueStatus = 'OPEN' | 'IN_PROGRESS' | 'CLOSED';
 export type BadgeColors = 'red' | 'violet' | 'green';
 
+export interface StatusFilterObject {
+  label: string;
+  value?: IssueStatus;
+}
+
 export interface IssueSchema {
   _id: object;
   title: string;

@@ -3,8 +3,6 @@ import User from './userModel';
 
 // _id is auto-generated in MongoDB.
 const issueSchema = new mongoose.Schema({
-  _id: Schema.Types.ObjectId,
-
   title: {
     type: String,
     required: true,
