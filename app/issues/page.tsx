@@ -15,8 +15,13 @@ interface Props {
 }
 
 const IssuesPage = async ({ searchParams }: Props) => {
-  console.log(searchParams.status);
-  const issues: IssueSchema[] = await Issue.find();
+  let issues: IssueSchema[] = await Issue.find();
+
+  if (searchParams.status) {
+    issues = await Issue.find({
+      status: searchParams.status,
+    });
+  }
 
   return (
     <div className="shadow-sm shadow-violet-500 rounded-xl px-5 py-8 text-white flex flex-col gap-5 max-w-5xl mx-auto ">
