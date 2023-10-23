@@ -8,7 +8,14 @@ import IssueAction from './IssueAction';
 
 connectToDatabase();
 
-const IssuesPage = async () => {
+interface Props {
+  searchParams: {
+    status: string;
+  };
+}
+
+const IssuesPage = async ({ searchParams }: Props) => {
+  console.log(searchParams.status);
   const issues: IssueSchema[] = await Issue.find();
 
   return (

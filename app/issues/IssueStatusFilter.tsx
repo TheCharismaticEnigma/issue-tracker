@@ -1,9 +1,12 @@
 'use client';
 
-import { Select } from '@radix-ui/themes';
 import { StatusFilter } from '@/entities';
+import { Select } from '@radix-ui/themes';
+import { useRouter } from 'next/navigation';
 
 const IssueStatusFilter = () => {
+  const router = useRouter();
+
   const filterCriterion: StatusFilter[] = [
     { label: 'All Issues' },
     {
@@ -20,8 +23,13 @@ const IssueStatusFilter = () => {
     },
   ];
 
+  const setSearchParams = (criteria: string) => {
+    const path = criteria === 'all' ? '/issues' : `/issues?status=${criteria}`;
+    router.push(path);
+  };
+
   return (
-    <Select.Root size={'3'} defaultValue="all">
+    <Select.Root size={'3'} defaultValue="all" onValueChange={setSearchParams}>
       <Select.Trigger />
       <Select.Content>
         <Select.Group>
