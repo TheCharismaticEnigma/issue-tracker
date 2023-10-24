@@ -1,7 +1,7 @@
 import { Link } from '@/components';
 import IssueStatusBadge from '@/components/IssueStatusBadge';
 import { connectToDatabase } from '@/dbConfig/dbConfig';
-import { IssueSchema } from '@/entities';
+import { IssueSchema, IssueStatus } from '@/entities';
 import Issue from '@/models/issueModel';
 import { Table } from '@radix-ui/themes';
 import IssueAction from './IssueAction';
@@ -10,18 +10,18 @@ connectToDatabase();
 
 interface Props {
   searchParams: {
-    status: string;
+    status: IssueStatus;
   };
 }
 
-const IssuesPage = async ({ searchParams }: Props) => {
+const IssuesPage = async ({ searchParams: { status } }: Props) => {
   let issues: IssueSchema[] = await Issue.find();
 
-  if (searchParams.status) {
+  const issueStatuses: IssueStatus[] = ['OPEN', 'CLOSED', 'IN_PROGRESS'];
+  if (status && issueStatuses.indexOf(status) !== -1)
     issues = await Issue.find({
-      status: searchParams.status,
+      status: status,
     });
-  }
 
   return (
     <div className="shadow-sm shadow-violet-500 rounded-xl px-5 py-8 text-white flex flex-col gap-5 max-w-5xl mx-auto ">

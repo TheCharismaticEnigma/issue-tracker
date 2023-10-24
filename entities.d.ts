@@ -4,7 +4,7 @@
 export type IssueStatus = 'OPEN' | 'IN_PROGRESS' | 'CLOSED';
 export type BadgeColors = 'red' | 'violet' | 'green';
 
-export interface StatusFilterObject {
+export interface StatusFilter {
   label: string;
   value?: IssueStatus;
 }
@@ -18,3 +18,5 @@ export interface IssueSchema {
   description: string;
   assignedToUserId?: string;
 }
+
+export const issueStatuses: IssueStatus[] = ['CLOSED', 'IN_PROGRESS', 'OPEN'];
