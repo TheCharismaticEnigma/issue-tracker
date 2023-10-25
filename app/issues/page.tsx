@@ -6,6 +6,7 @@ import Issue from '@/models/issueModel';
 import { Table } from '@radix-ui/themes';
 import IssueAction from './IssueAction';
 import { ArrowUpIcon } from '@radix-ui/react-icons';
+import Pagination from '@/components/Pagination';
 
 connectToDatabase();
 
@@ -13,6 +14,7 @@ interface Props {
   searchParams: {
     status: IssueStatus;
     orderBy: string;
+    page: string;
   };
 }
 
@@ -23,7 +25,7 @@ interface TableHeaderCellInterface {
 }
 
 const IssuesPage = async ({ searchParams }: Props) => {
-  const { status, orderBy } = searchParams;
+  const { status, orderBy, page } = searchParams;
 
   let issues: IssueSchema[] = await Issue.find();
 
@@ -91,6 +93,12 @@ const IssuesPage = async ({ searchParams }: Props) => {
           })}
         </Table.Body>
       </Table.Root>
+
+      <Pagination
+        currentPage={parseInt(page) || 1}
+        totalItems={issues.length}
+        itemsPerPage={5}
+      />
     </div>
   );
 };

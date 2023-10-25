@@ -27,6 +27,7 @@ const Pagination = ({
   const searchParams = useSearchParams();
 
   const updatePage = (page: number) => {
+    console.log(page);
     const params = new URLSearchParams(searchParams);
     params.set('page', page.toString());
     console.log(params.toString());
