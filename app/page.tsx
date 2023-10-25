@@ -1,9 +1,17 @@
-export default function Home() {
+import Pagination from '@/components/Pagination';
+
+interface Props {
+  searchParams: {
+    page: string;
+  };
+}
+
+export default function Home({ searchParams }: Props) {
+  const currentPage = Number.parseInt(searchParams?.page) || 1;
+
   return (
     <div className="text-white ">
-      Home Page Content <br />
-      Azhar Anjum Muhammad Rizvi Muhammad Nassouridine Avishkar Ansari <br />
-      Betrayal Begets Blood
+      <Pagination currentPage={currentPage} totalItems={20} itemsPerPage={5} />
     </div>
   );
 }
