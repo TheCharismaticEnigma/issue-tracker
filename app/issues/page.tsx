@@ -14,11 +14,10 @@ export interface IssueQuery {
 }
 
 const IssuesPage = async ({ searchParams }: { searchParams: IssueQuery }) => {
+  const issueStatuses: IssueStatus[] = ['OPEN', 'CLOSED', 'IN_PROGRESS'];
   const { status, page } = searchParams;
 
   let issues: IssueSchema[] = await Issue.find();
-
-  const issueStatuses: IssueStatus[] = ['OPEN', 'CLOSED', 'IN_PROGRESS'];
 
   if (status && issueStatuses.indexOf(status) !== -1)
     issues = await Issue.find({

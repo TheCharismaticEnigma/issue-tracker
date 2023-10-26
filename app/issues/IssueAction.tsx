@@ -7,7 +7,7 @@ const IssueAction = () => {
     <Flex mb={'3'} justify={'between'}>
       <IssueStatusFilter />
 
-      <Button className="w-fit" color="violet" size={'3'}>
+      <Button className="w-fit" variant="surface" color="brown" size={'3'}>
         <Link href="/issues/new"> New Issue</Link>
       </Button>
     </Flex>

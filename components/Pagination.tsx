@@ -35,7 +35,7 @@ const Pagination = ({
   if (totalPages <= 1) return null;
 
   return (
-    <Flex gap={'3'} align={'center'}>
+    <Flex gap={'3'} align={'center'} mt={'3'}>
       <PaginationButton
         disabled={currentPage === 1}
         onClick={() => {
@@ -93,7 +93,12 @@ const PaginationButton = ({
   onClick,
 }: ButtonProps) => {
   return (
-    <Button variant="soft" color="ruby" disabled={disabled} onClick={onClick}>
+    <Button
+      variant="surface"
+      color="indigo"
+      disabled={disabled}
+      onClick={onClick}
+    >
       {children}
     </Button>
   );
