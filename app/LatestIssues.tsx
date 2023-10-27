@@ -2,7 +2,7 @@ import IssueStatusBadge from '@/components/IssueStatusBadge';
 import { connectToDatabase } from '@/dbConfig/dbConfig';
 import { IssueSchema } from '@/entities';
 import Issue from '@/models/issueModel';
-import { Table, Flex, Card } from '@radix-ui/themes';
+import { Table, Flex, Card, Heading } from '@radix-ui/themes';
 import Link from 'next/link';
 
 connectToDatabase();
@@ -24,6 +24,10 @@ const LatestIssues = async () => {
 
   return (
     <Card>
+      <Heading size={'5'} mb={'3'} className="px-1 py-2 uppercase">
+        Latest Issues
+      </Heading>
+
       <Table.Root variant="surface">
         <Table.Body>
           {latestIssues.map(
