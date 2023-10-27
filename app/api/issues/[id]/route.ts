@@ -36,7 +36,6 @@ export async function PATCH(
   try {
     const requestBody: PatchIssueInterface = await request.json();
     const validation = patchIssueSchema.safeParse(requestBody);
-    console.log(requestBody);
 
     if (!validation.success)
       return NextResponse.json(
