@@ -53,10 +53,28 @@ const IssueDetailsPage = async ({ params: { id } }: Props) => {
   );
 };
 
+/*
 export const metadata: Metadata = {
   title: 'Issue Tracker - Issue Details',
   description: 'Work with the intricate details of a particular issue. ',
 };
+*/
+
+// Dynamic Metadata
+export async function generateMetadata({ params: { id } }: Props) {
+  try {
+    const issue: IssueSchema | null = await Issue.findById({
+      _id: id,
+    });
+
+    return {
+      title: `Issue - ${issue?.title || 'Details Page'}`,
+      description:
+        issue?.description ||
+        'Peruse the intricate details of a particular issue.',
+    };
+  } catch (error) {}
+}
 
 export default IssueDetailsPage;
 
