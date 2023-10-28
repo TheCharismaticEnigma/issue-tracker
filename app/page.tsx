@@ -1,4 +1,8 @@
-import Pagination from '@/components/Pagination';
+import Issue from '@/models/issueModel';
+import IssueSummary from './IssueSummary';
+import { IssueSchema } from '@/entities';
+import IssueChart from './IssueChart';
+import { Grid, Flex, Box } from '@radix-ui/themes';
 import LatestIssues from './LatestIssues';
 
 interface Props {
@@ -7,10 +11,39 @@ interface Props {
   };
 }
 
-export default function Home({ searchParams }: Props) {
+export default async function Home({ searchParams }: Props) {
+  const allIssues: IssueSchema[] = await Issue.find();
+
+  const openCount = allIssues.filter((issue) => issue.status === 'OPEN').length;
+
+  const closedCount = allIssues.filter(
+    (issue) => issue.status === 'CLOSED'
+  ).length;
+
+  const inProgressCount = allIssues.length - (openCount + closedCount);
+
+  const issueStats = {
+    openCount,
+    inProgressCount,
+    closedCount,
+  };
+
   return (
-    <div className="text-white">
-      <LatestIssues />
-    </div>
+    <Grid
+      columns={{
+        initial: '1',
+        md: '2',
+      }}
+      gap={'5'}
+    >
+      <Flex direction={'column'} gap={'3'} align={'center'} justify={'between'}>
+        <IssueSummary issueStats={issueStats} />
+        <IssueChart issueStats={issueStats} />
+      </Flex>
+
+      <Flex align={'center'}>
+        <LatestIssues />
+      </Flex>
+    </Grid>
   );
 }

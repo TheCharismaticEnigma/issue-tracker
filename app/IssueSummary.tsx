@@ -4,9 +4,11 @@ import { Card, Flex, Text } from '@radix-ui/themes';
 import Link from 'next/link';
 
 interface Props {
-  openCount: number;
-  inProgressCount: number;
-  closedCount: number;
+  issueStats: {
+    openCount: number;
+    inProgressCount: number;
+    closedCount: number;
+  };
 }
 
 interface IssueSummaryContainer {
@@ -15,7 +17,9 @@ interface IssueSummaryContainer {
   status: IssueStatus;
 }
 
-const IssueSummary = ({ openCount, inProgressCount, closedCount }: Props) => {
+const IssueSummary = ({
+  issueStats: { openCount, inProgressCount, closedCount },
+}: Props) => {
   const containers: IssueSummaryContainer[] = [
     { label: 'Open Issues', count: openCount, status: 'OPEN' },
     {
@@ -27,7 +31,13 @@ const IssueSummary = ({ openCount, inProgressCount, closedCount }: Props) => {
   ];
 
   return (
-    <Flex gap={'4'}>
+    <Flex
+      gap={'4'}
+      display={{
+        initial: 'none',
+        sm: 'flex',
+      }}
+    >
       {containers.map(({ status, label, count }) => {
         return (
           <Card key={label} className="gap-5">

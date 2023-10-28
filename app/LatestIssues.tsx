@@ -23,7 +23,7 @@ const LatestIssues = async () => {
     .slice(0, 5);
 
   return (
-    <Card>
+    <Card className="w-full">
       <Heading size={'5'} mb={'3'} className="px-1 py-2 uppercase">
         Latest Issues
       </Heading>

@@ -4,31 +4,29 @@ import { Card } from '@radix-ui/themes';
 import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from 'recharts';
 
 interface Props {
-  open: number;
-  inProgress: number;
-  closed: number;
+  issueStats: {
+    openCount: number;
+    inProgressCount: number;
+    closedCount: number;
+  };
 }
 
-const IssueChart = ({ open, inProgress, closed }: Props) => {
+const IssueChart = ({ issueStats }: Props) => {
+  const { closedCount, inProgressCount, openCount } = issueStats;
+
   const data = [
-    { label: 'Open', value: open },
-    { label: 'In Progress', value: inProgress },
-    { label: 'Closed', value: closed },
+    { label: 'Open', value: openCount },
+    { label: 'In Progress', value: inProgressCount },
+    { label: 'Closed', value: closedCount },
   ];
 
   return (
-    <Card className="p-5">
-      <ResponsiveContainer width={'100%'} height={350}>
+    <Card className="p-1 w-5/6">
+      <ResponsiveContainer width={'100%'} height={400}>
         <BarChart data={data}>
           <XAxis dataKey="label" />
           <YAxis />
-          <Bar
-            dataKey="value"
-            barSize={60}
-            style={{
-              fill: 'var(--accent-9)',
-            }}
-          />
+          <Bar dataKey="value" barSize={40} fill={'#30A46C'} />
         </BarChart>
       </ResponsiveContainer>
     </Card>
