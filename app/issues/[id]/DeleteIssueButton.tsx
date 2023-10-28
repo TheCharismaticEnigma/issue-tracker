@@ -29,7 +29,7 @@ const DeleteIssueButton = ({ id }: { id: string }) => {
     <>
       <AlertDialog.Root>
         <AlertDialog.Trigger>
-          <Button color="red" className="max-w-xs" disabled={isDeleting}>
+          <Button color="red" className="max-w-xl" disabled={isDeleting}>
             <TrashIcon />
             {/* <Link href={`/issues/${id}/`}>Delete Issue </Link> */}
             Delete Issue

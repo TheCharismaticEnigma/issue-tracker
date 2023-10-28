@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 const EditIssueButton = ({ id }: { id: string }) => {
   return (
-    <Button className="max-w-xs">
+    <Button className="max-w-xl">
       <Pencil2Icon />
       <Link href={`/issues/${id}/edit`}>Edit Issue </Link>
     </Button>

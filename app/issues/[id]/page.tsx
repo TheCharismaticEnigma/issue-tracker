@@ -40,25 +40,27 @@ const IssueDetailsPage = async ({ params: { id } }: Props) => {
     <Grid
       columns={{
         initial: '1',
-        md: '3',
+        sm: '3',
       }}
       gap={'5'}
       className="shadow-sm shadow-violet-500 rounded-xl px-5 py-8 text-white flex flex-col gap-5 max-w-5xl mx-auto "
     >
-      <Box className="lg:col-span-2">
+      <Box className="md:col-span-2 ">
         <IssueDetails issue={issue} />
       </Box>
 
       {/* Display the issue modification box ONLY when LOGGED IN */}
 
       {session && (
-        <Box className="lg:flex lg:place-items-center">
-          <Flex className="gap-3 flex-col mx-auto lg:w-4/5 ">
-            <AssigneeSelect issue={issue} />
-            <EditIssueButton id={id} />
-            <DeleteIssueButton id={id} />
-          </Flex>
-        </Box>
+        <Flex
+          direction={'column'}
+          align={'stretch'}
+          className="gap-3 justify-center max-w-lg "
+        >
+          <AssigneeSelect issue={issue} />
+          <EditIssueButton id={id} />
+          <DeleteIssueButton id={id} />
+        </Flex>
       )}
     </Grid>
   );
