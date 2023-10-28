@@ -9,6 +9,7 @@ import DeleteIssueButton from './DeleteIssueButton';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/app/auth/authOptions';
 import AssigneeSelect from './AssigneeSelect';
+import { Metadata } from 'next';
 
 interface Props {
   params: {
@@ -50,6 +51,11 @@ const IssueDetailsPage = async ({ params: { id } }: Props) => {
       )}
     </Grid>
   );
+};
+
+export const metadata: Metadata = {
+  title: 'Issue Tracker - Issue Details',
+  description: 'Work with the intricate details of a particular issue. ',
 };
 
 export default IssueDetailsPage;

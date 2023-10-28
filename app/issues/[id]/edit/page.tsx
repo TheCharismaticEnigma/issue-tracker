@@ -4,6 +4,7 @@ import Issue from '@/models/issueModel';
 import { notFound } from 'next/navigation';
 import dynamic from 'next/dynamic';
 import IssueLoadingSkeleton from '../../(components)/IssueLoadingSkeleton';
+import { Metadata } from 'next';
 
 interface Props {
   params: {
@@ -25,6 +26,11 @@ const EditIssuePage = async ({ params: { id } }: Props) => {
   if (!issue) notFound();
 
   return <IssueForm issue={issue} />;
+};
+
+export const metadata: Metadata = {
+  title: 'Issue Tracker - Edit Issue',
+  description: 'Edit an existing issue ',
 };
 
 export default EditIssuePage;

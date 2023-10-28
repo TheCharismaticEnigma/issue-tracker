@@ -4,6 +4,7 @@ import { IssueSchema, IssueStatus } from '@/entities';
 import Issue from '@/models/issueModel';
 import IssueAction from './IssueAction';
 import IssueTable from './IssueTable';
+import { Metadata } from 'next';
 
 connectToDatabase();
 
@@ -66,5 +67,11 @@ const IssuesPage = async ({ searchParams }: { searchParams: IssueQuery }) => {
 
 export const dynamic = 'force-dynamic'; // This page will be dynamically rendered .
 // export const revalidate = 0 ; is the same.
+
+export const metadata: Metadata = {
+  title: 'Issue Tracker - Issue List',
+  description:
+    'View a paginated list of the issues. Also sortable according to the issue title, creation date, and issue status.  ',
+};
 
 export default IssuesPage;
