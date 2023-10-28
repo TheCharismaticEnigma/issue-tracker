@@ -1,5 +1,6 @@
 # ISSUE TRACKER APP
-## https://vercel.com/thecharismaticenigma/issue-tracker/4DQutNWWeBzv5vKytgnaut7qG7E1
+
+## https://issue-tracker-neon.vercel.app/
 
 ISSUE TRACKING APP is a fully functional, responsive & interactive app created using `NextJS and Typescript`, uses `MongoDB` database engine.
 
@@ -12,13 +13,13 @@ Add the environment variables w/ Vercel when deploying.
 ```js
    EmployedTechnologies: {
     Framework: "NextJS",
-    Authentication: "Next Auth", 
+    Authentication: "Next Auth",
     Database : "MongoDB",
     ObjectModelingTool: "Mongoose",
     SchemaValidation: "Zod",
-    Styling: "TailwindCSS", 
+    Styling: "TailwindCSS",
     TailwindComponentLibrary: "Radix-UI",
-    Charts: "Recharts", 
+    Charts: "Recharts",
     Encryption : "bcryptJs",
     HTTPService : "Axios",
     Token: "jsonWebToken",
