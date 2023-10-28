@@ -89,10 +89,10 @@ const NavBar = () => {
   // provides access to status of authentication and data of the user.
 
   return (
-    <nav className=" text-white border-b mb-5 py-3 px-5 ">
+    <nav className=" text-white border-b  mb-5 py-3 px-5 ">
       <Container>
         <Flex justify={'between'}>
-          <Flex align={'center'} gap={'4'}>
+          <Flex align={'center'} gap={'5'}>
             <Link href="/">
               <AiFillBug />
             </Link>

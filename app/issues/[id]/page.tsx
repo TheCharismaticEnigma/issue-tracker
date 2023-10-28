@@ -10,6 +10,7 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/app/auth/authOptions';
 import AssigneeSelect from './AssigneeSelect';
 import { Metadata } from 'next';
+import { cache } from 'react';
 
 interface Props {
   params: {
@@ -19,8 +20,18 @@ interface Props {
 
 connectToDatabase();
 
+// Using React Cache (single request) for reducing load on database
+const fetchIssue = cache(async (id: string) => {
+  try {
+    const issue: IssueSchema | null = await Issue.findOne({ _id: id });
+    return issue;
+  } catch (error) {
+    return null;
+  }
+});
+
 const IssueDetailsPage = async ({ params: { id } }: Props) => {
-  const issue: IssueSchema | null = await Issue.findOne({ _id: id });
+  const issue = await fetchIssue(id);
   const session = await getServerSession(authOptions);
 
   if (!issue) notFound();
@@ -63,9 +74,7 @@ export const metadata: Metadata = {
 // Dynamic Metadata
 export async function generateMetadata({ params: { id } }: Props) {
   try {
-    const issue: IssueSchema | null = await Issue.findById({
-      _id: id,
-    });
+    const issue: IssueSchema | null = await fetchIssue(id);
 
     return {
       title: `Issue - ${issue?.title || 'Details Page'}`,
