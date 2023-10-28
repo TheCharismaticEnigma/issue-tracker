@@ -7,11 +7,11 @@ export async function connectToDatabase() {
     const connection = mongoose.connection;
 
     connection.on('connected', () => {
-      console.log('CONNECTION WITH DATABASE ESTABLISHED');
+      // console.log('CONNECTION WITH DATABASE ESTABLISHED');
     });
 
     connection.on('error', () => {
-      console.log('CONNECTION WITH DATABASE FAILED');
+      // console.log('CONNECTION WITH DATABASE FAILED');
       process.exit();
     });
   } catch (error) {
