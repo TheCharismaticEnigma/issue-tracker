@@ -1,7 +1,7 @@
 export { default } from 'next-auth/middleware';
 
 // export const config = { matcher: ['/issues/new', '/issues/:id/edit'] };
-export const config = { matcher: ['/issues/new', '/issues/:id+'] };
+export const config = { matcher: ['/issues/new', '/issues/:id*'] };
 
 // ? : 0/1 parameter(s)
 // * : 0/more parameter(s)
