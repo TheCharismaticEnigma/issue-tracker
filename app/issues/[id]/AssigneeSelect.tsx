@@ -2,7 +2,7 @@
 
 import { IssueSchema } from '@/entities';
 import useFetchUsers from '@/hooks/useFetchUsers';
-import { Select, Box } from '@radix-ui/themes';
+import { Select } from '@radix-ui/themes';
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
 

@@ -10,22 +10,33 @@ import { NextRequest, NextResponse } from 'next/server';
 connectToDatabase(); // Establish a connection with database.
 
 export async function GET() {
+  const session = await getServerSession(authOptions);
+
+  if (!session)
+    return NextResponse.json(
+      {
+        error: 'User must be logged in.',
+      },
+      { status: 401 }
+    );
+
   try {
     const issues = await Issue.find();
 
-    if (issues)
-      return NextResponse.json(
-        {
-          message: 'Issues sent successfully.',
-          success: true,
-          issues,
-        },
-        { status: 200 }
-      );
+    if (!issues) {
+      return NextResponse.json({
+        issues: {},
+      });
+    }
 
-    return NextResponse.json({
-      issues: {},
-    });
+    return NextResponse.json(
+      {
+        message: 'Issues sent successfully.',
+        success: true,
+        issues: issues,
+      },
+      { status: 200 }
+    );
   } catch (error) {
     return NextResponse.json(
       { error: 'An unknown error occurred' },

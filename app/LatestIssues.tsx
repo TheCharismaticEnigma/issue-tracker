@@ -2,7 +2,7 @@ import IssueStatusBadge from '@/components/IssueStatusBadge';
 import { connectToDatabase } from '@/dbConfig/dbConfig';
 import { IssueSchema } from '@/entities';
 import Issue from '@/models/issueModel';
-import { Table, Flex, Card, Heading } from '@radix-ui/themes';
+import { Card, Flex, Heading, Table } from '@radix-ui/themes';
 import Link from 'next/link';
 
 connectToDatabase();
@@ -59,5 +59,7 @@ const LatestIssues = async () => {
     </Card>
   );
 };
+
+export const dynamic = 'force-dynamic'; // This page will be dynamically rendered .
 
 export default LatestIssues;
