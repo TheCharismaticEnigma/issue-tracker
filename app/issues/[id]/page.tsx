@@ -11,6 +11,7 @@ import { authOptions } from '@/app/auth/authOptions';
 import AssigneeSelect from './AssigneeSelect';
 import { Metadata } from 'next';
 import { cache } from 'react';
+import StatusSelect from './StatusSelect';
 
 interface Props {
   params: {
@@ -57,6 +58,7 @@ const IssueDetailsPage = async ({ params: { id } }: Props) => {
           align={'stretch'}
           className="gap-3 justify-center max-w-lg "
         >
+          <StatusSelect issue={issue} />
           <AssigneeSelect issue={issue} />
           <EditIssueButton id={id} />
           <DeleteIssueButton id={id} />

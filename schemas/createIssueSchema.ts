@@ -24,6 +24,8 @@ export const patchIssueSchema = z.object({
     .min(1, { message: 'Id is required' })
     .optional()
     .default('unassigned'),
+
+  status: z.string().optional().default('OPEN'),
 });
 
 export type PatchIssueInterface = z.infer<typeof patchIssueSchema>;

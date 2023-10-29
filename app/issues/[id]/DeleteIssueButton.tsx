@@ -32,6 +32,7 @@ const DeleteIssueButton = ({ id }: { id: string }) => {
           <Button
             style={{
               backgroundColor: 'red',
+              cursor: 'pointer',
             }}
             className="max-w-xl"
             disabled={isDeleting}

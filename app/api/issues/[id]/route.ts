@@ -45,7 +45,7 @@ export async function PATCH(
         { status: 400 }
       );
 
-    const { title, description, assignedToUserId } = requestBody;
+    const { title, description, assignedToUserId, status } = requestBody;
 
     if (assignedToUserId && assignedToUserId !== 'unassigned') {
       const assignedUser = await User.findOne({
@@ -65,6 +65,7 @@ export async function PATCH(
         title,
         description,
         assignedToUserId,
+        status,
       }
     );
 
