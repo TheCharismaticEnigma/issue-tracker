@@ -30,8 +30,10 @@ const DeleteIssueButton = ({ id }: { id: string }) => {
       <AlertDialog.Root>
         <AlertDialog.Trigger>
           <Button
-            color="red"
-            className="max-w-xl bg-current"
+            style={{
+              backgroundColor: 'red',
+            }}
+            className="max-w-xl"
             disabled={isDeleting}
           >
             <TrashIcon />
