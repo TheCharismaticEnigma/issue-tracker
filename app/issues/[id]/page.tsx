@@ -43,7 +43,7 @@ const IssueDetailsPage = async ({ params: { id } }: Props) => {
         sm: '3',
       }}
       gap={'5'}
-      className="shadow-sm shadow-violet-500 rounded-xl px-5 py-8 text-white flex flex-col gap-5 max-w-5xl mx-auto "
+      className="shadow-sm shadow-violet-500 rounded-xl px-5 py-8 text-white max-w-5xl mx-auto "
     >
       <Box className="md:col-span-2 ">
         <IssueDetails issue={issue} />
