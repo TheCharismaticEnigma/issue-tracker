@@ -29,7 +29,11 @@ const DeleteIssueButton = ({ id }: { id: string }) => {
     <>
       <AlertDialog.Root>
         <AlertDialog.Trigger>
-          <Button color="red" className="max-w-xl" disabled={isDeleting}>
+          <Button
+            color="red"
+            className="max-w-xl bg-current"
+            disabled={isDeleting}
+          >
             <TrashIcon />
             {/* <Link href={`/issues/${id}/`}>Delete Issue </Link> */}
             Delete Issue
@@ -81,3 +85,4 @@ const DeleteIssueButton = ({ id }: { id: string }) => {
 };
 
 export default DeleteIssueButton;
+//
