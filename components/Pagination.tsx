@@ -27,9 +27,14 @@ const Pagination = ({
   const searchParams = useSearchParams();
 
   const updatePage = (page: number) => {
-    const params = new URLSearchParams(searchParams);
-    params.set('page', page.toString());
-    router.push(`?${params.toString()}`); // update the queryString not the entire URL
+    const params = new URLSearchParams();
+
+    searchParams.forEach((value, key) => {
+      params.append(key, value);
+    });
+
+    params.set('page', `${page}`);
+    router.push(`?${params.toString()}`);
   };
 
   if (totalPages <= 1) return null;

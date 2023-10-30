@@ -1,6 +1,6 @@
 'use client';
 
-import { Button, Select } from '@radix-ui/themes';
+import { Select } from '@radix-ui/themes';
 import { useRouter, useSearchParams } from 'next/navigation';
 
 const PageCountAction = () => {
