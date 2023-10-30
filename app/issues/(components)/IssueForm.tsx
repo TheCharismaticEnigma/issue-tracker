@@ -4,7 +4,7 @@ import { ErrorMessage, Spinner } from '@/components';
 import createIssueSchema, { type IssueForm } from '@/schemas/createIssueSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Box, Button, Callout, TextField } from '@radix-ui/themes';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
@@ -50,7 +50,13 @@ const IssueForm = ({ issue }: Props) => {
       else await axios.post('/api/issues', formData);
     } catch (error) {
       setIsSubmitting(false);
-      setError('An Unexpected error occurred.');
+
+      const errorMessage =
+        (error instanceof AxiosError &&
+          error.response?.data.error[0].message) ||
+        'Title & Description must be longer. ';
+
+      setError(errorMessage);
       throw error;
     }
     router.push('/issues');
