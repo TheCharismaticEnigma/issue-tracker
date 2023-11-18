@@ -4,7 +4,7 @@
 
 @layer base {
   .navLink {
-    @apply transition-colors px-1.5 py-1 transition-all hover:bg-blue-300 rounded-lg hover:text-black;
+    @apply px-4 py-2 text-black font-medium rounded-3xl shadow-sm  hover:shadow-pink-900 shadow-indigo-500 bg-gradient-to-r from-purple-300 to-indigo-300;
   }
 
   button:focus {
