@@ -32,7 +32,6 @@ const IssueStatusFilter = () => {
     });
 
     if (criteria === 'all' && params.get('status')) params.delete('status');
-
     criteria !== 'all' && params.set('status', criteria);
 
     const query = params.size ? `?${params.toString()}` : '';

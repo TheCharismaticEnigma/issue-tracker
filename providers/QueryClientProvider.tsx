@@ -20,3 +20,4 @@ const QueryClientProvider = ({ children }: PropsWithChildren) => {
 };
 
 export default QueryClientProvider;
+
